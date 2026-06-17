@@ -103,17 +103,33 @@ export default function LoginScreen() {
     return (
         <div className="login-container">
             <div className="login-card">
-                <div className="login-header">
+                <aside className="login-brand">
                     <div className="logo-container">
                         <Flag className="logo-icon" />
                     </div>
-
                     <h1 className="login-title">Flag Challenge</h1>
-                    <p className="login-subtitle">Hecho por: Victor Prim</p>
-                    <p className="login-description">Inicia sesión, crea tu cuenta o juega como invitado.</p>
-                </div>
+                    <p className="login-subtitle">Pon a prueba tus conocimientos de banderas</p>
 
-                <div className="login-tabs">
+                    <ul className="login-features">
+                        <li className="info-item">
+                            <span className="status-dot"></span>
+                            +250 banderas del mundo
+                        </li>
+                        <li className="info-item">
+                            <span className="status-dot"></span>
+                            15 segundos por pregunta
+                        </li>
+                        <li className="info-item">
+                            <span className="status-dot"></span>
+                            Ranking en tiempo real
+                        </li>
+                    </ul>
+                </aside>
+
+                <div className="login-panel">
+                    <p className="login-description">Inicia sesión, crea tu cuenta o juega como invitado.</p>
+
+                    <div className="login-tabs">
                     <button
                         type="button"
                         className={`login-tab ${activeTab === TAB_LOGIN ? 'login-tab-active' : ''}`}
@@ -270,27 +286,15 @@ export default function LoginScreen() {
                     </form>
                 )}
 
-                <div className="login-actions">
-                    <button
-                        onClick={goToRankings}
-                        className="rankings-link-button"
-                        type="button"
-                    >
-                        <Trophy className="rankings-link-icon" />
-                        Ver Clasificación
-                    </button>
-                </div>
-
-                <div className="login-footer">
-                    <div className="footer-info">
-                        <div className="info-item">
-                            <span className="status-dot"></span>
-                            12 banderas
-                        </div>
-                        <div className="info-item">
-                            <span className="status-dot"></span>
-                            15 seg/pregunta
-                        </div>
+                    <div className="login-actions">
+                        <button
+                            onClick={goToRankings}
+                            className="rankings-link-button"
+                            type="button"
+                        >
+                            <Trophy className="rankings-link-icon" />
+                            Ver Clasificación
+                        </button>
                     </div>
                 </div>
             </div>

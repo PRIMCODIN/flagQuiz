@@ -189,7 +189,7 @@ export default function GameScreen() {
 
                 <div className="question-card">
                     <div className="flag-container">
-                        <svg className="circular-timer" style={{ transform: 'rotate(-90deg)' }}>
+                        <svg className="circular-timer" viewBox="0 0 320 320" style={{ transform: 'rotate(-90deg)' }}>
                             <circle
                                 className="timer-track"
                                 cx="160"

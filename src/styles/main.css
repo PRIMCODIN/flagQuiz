@@ -1,22 +1,17 @@
 /* ============================================
    FLAG CHALLENGE - MAIN CSS
-   Diseùo minimalista con azul Medac
+   Diseno mobile-first, paleta verde unica
    ============================================ */
 
 /* ============================================
    VARIABLES GLOBALES
    ============================================ */
 :root {
-    /* Paleta de colores Medac */
-    --medac-blue: #0066CC;
-    --medac-blue-dark: #004C99;
-    --medac-blue-light: #3385D6;
-    --medac-blue-lighter: #EBF4FF;
-    /* Paleta tipo Duolingo (acento principal) */
-    --primary: #58CC02;
-    --primary-dark: #46A302;
-    --primary-soft: #E7F9D8;
-    --primary-ink: #1F4B00;
+    /* Paleta de marca √∫nica (verde tipo Duolingo) */
+    --primary: #58CC02;        /* acento principal (fondos/botones) */
+    --primary-dark: #46A302;   /* hover y acentos sobre blanco */
+    --primary-soft: #E7F9D8;   /* fondos suaves y estados activos */
+    --primary-ink: #1F4B00;    /* texto/iconos sobre blanco (AA) */
     /* Colores complementarios */
     --success: #00C48C;
     --warning: #FFB84D;
@@ -29,7 +24,7 @@
     --gray-300: #D1D1D1;
     --gray-500: #737373;
     --gray-700: #404040;
-    /* Tipografùa */
+    /* TipografÔøΩa */
     --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     /* Espaciados */
     --spacing-xs: 0.5rem;
@@ -43,9 +38,9 @@
     --radius-lg: 16px;
     --radius-xl: 24px;
     /* Sombras */
-    --shadow-sm: 0 2px 8px rgba(0, 102, 204, 0.08);
-    --shadow-md: 0 4px 16px rgba(0, 102, 204, 0.12);
-    --shadow-lg: 0 8px 32px rgba(0, 102, 204, 0.16);
+    --shadow-sm: 0 2px 8px rgba(31, 75, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(31, 75, 0, 0.12);
+    --shadow-lg: 0 8px 32px rgba(31, 75, 0, 0.16);
 }
 
 /* ============================================
@@ -87,9 +82,10 @@ input, select {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md);
-    background: linear-gradient(135deg, var(--medac-blue-lighter) 0%, var(--white) 100%);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--white) 100%);
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .floating-flags {
@@ -124,16 +120,64 @@ input, select {
     background: var(--white);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
-    padding: var(--spacing-xl);
-    max-width: 420px;
     width: 100%;
+    max-width: 460px;
     position: relative;
     z-index: 1;
+    overflow: hidden; /* recorta las esquinas del panel de marca */
+    display: flex;
+    flex-direction: column;
 }
 
-.login-header {
+/* Panel de marca decorativo (arriba en m√≥vil, lateral en escritorio) */
+.login-brand {
+    background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
     text-align: center;
-    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+}
+
+.login-brand .logo-icon,
+.login-brand .login-title {
+    color: var(--white);
+}
+
+.login-brand .login-subtitle {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.login-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: var(--spacing-md) auto 0;
+    max-width: 260px;
+    text-align: left;
+}
+
+.login-features .info-item {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.9rem;
+}
+
+.login-features .status-dot {
+    background: var(--white);
+}
+
+.login-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+}
+
+.login-panel .login-description {
+    text-align: center;
+}
+
+.login-panel .login-tabs {
+    margin-bottom: 0;
 }
 
 .logo-container {
@@ -144,7 +188,7 @@ input, select {
 .logo-icon {
     width: 64px;
     height: 64px;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .login-title {
@@ -156,7 +200,7 @@ input, select {
 
 .login-subtitle {
     font-size: 1.125rem;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
 }
@@ -225,7 +269,7 @@ input, select {
 .label-icon {
     width: 16px;
     height: 16px;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .form-input,
@@ -240,8 +284,8 @@ input, select {
 
     .form-input:focus,
     .form-select:focus {
-        border-color: var(--medac-blue);
-        box-shadow: 0 0 0 3px var(--medac-blue-lighter);
+        border-color: var(--primary-ink);
+        box-shadow: 0 0 0 3px var(--primary-soft);
     }
 
     .form-input:disabled,
@@ -259,7 +303,7 @@ input, select {
 .form-select {
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066CC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231F4B00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 1.25rem;
@@ -394,7 +438,7 @@ input, select {
     width: 64px;
     height: 64px;
     border: 4px solid var(--gray-200);
-    border-top-color: var(--medac-blue);
+    border-top-color: var(--primary-ink);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto var(--spacing-md);
@@ -471,7 +515,7 @@ input, select {
 }
 
 .score-display {
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .progress-bar-container {
@@ -484,7 +528,7 @@ input, select {
 
 .progress-bar {
     height: 100%;
-    background: var(--medac-blue);
+    background: var(--primary-ink);
     border-radius: 4px;
     transition: width 0.5s ease;
 }
@@ -501,15 +545,18 @@ input, select {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--spacing-xl);
-    height: 320px;
+    margin: 0 auto var(--spacing-xl);
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
 }
 
-/* CONTADOR CIRCULAR TIPO QUESO */
+/* CONTADOR CIRCULAR TIPO QUESO (escala con el contenedor v√≠a viewBox) */
 .circular-timer {
     position: absolute;
-    width: 320px;
-    height: 320px;
+    inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .timer-track {
@@ -535,8 +582,8 @@ input, select {
 }
 
 .flag-image {
-    width: 256px;
-    height: 256px;
+    width: 78%;
+    height: 78%;
     object-fit: contain;
     filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
     position: relative;
@@ -674,7 +721,7 @@ input, select {
 .score-number {
     font-size: 4rem;
     font-weight: 700;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     line-height: 1;
     margin-bottom: var(--spacing-xs);
 }
@@ -718,7 +765,7 @@ input, select {
 }
 
 .stat-time .stat-icon {
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .stat-value {
@@ -734,7 +781,7 @@ input, select {
 }
 
 .rank-box {
-    background: var(--medac-blue-lighter);
+    background: var(--primary-soft);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     text-align: center;
@@ -752,19 +799,19 @@ input, select {
 .rank-icon {
     width: 20px;
     height: 20px;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .rank-text {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .rank-number {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .prize-section {
@@ -793,7 +840,7 @@ input, select {
 }
 
 .prize-code-box {
-    background: linear-gradient(135deg, var(--medac-blue) 0%, var(--medac-blue-dark) 100%);
+    background: linear-gradient(135deg, var(--primary-ink) 0%, var(--primary-ink) 100%);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
     text-align: center;
@@ -1032,11 +1079,11 @@ input, select {
 .filter-icon {
     width: 20px;
     height: 20px;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .filter-current {
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .filter-options {
@@ -1061,11 +1108,11 @@ input, select {
 }
 
     .filter-option:hover {
-        background: var(--medac-blue-lighter);
+        background: var(--primary-soft);
     }
 
 .filter-option-active {
-    background: var(--medac-blue);
+    background: var(--primary-ink);
     color: var(--white);
 }
 
@@ -1174,7 +1221,7 @@ input, select {
 .podium-score {
     font-size: 1.125rem;
     font-weight: 700;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
 }
 
 .ranking-list-card {
@@ -1186,7 +1233,7 @@ input, select {
 }
 
 .ranking-list-header {
-    background: var(--medac-blue);
+    background: var(--primary-ink);
     padding: var(--spacing-md);
 }
 
@@ -1223,8 +1270,8 @@ input, select {
     }
 
 .ranking-item-current {
-    background: var(--medac-blue-lighter);
-    border-left: 4px solid var(--medac-blue);
+    background: var(--primary-soft);
+    border-left: 4px solid var(--primary-ink);
 }
 
 .ranking-item-content {
@@ -1284,7 +1331,7 @@ input, select {
 }
 
 .player-badge {
-    background: var(--medac-blue);
+    background: var(--primary-ink);
     color: var(--white);
     font-size: 0.625rem;
     font-weight: 700;
@@ -1327,7 +1374,7 @@ input, select {
 .ranking-score {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     line-height: 1;
 }
 
@@ -1340,8 +1387,8 @@ input, select {
 .button-home {
     width: 100%;
     background: var(--white);
-    color: var(--medac-blue);
-    border: 2px solid var(--medac-blue);
+    color: var(--primary-ink);
+    border: 2px solid var(--primary-ink);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1355,7 +1402,7 @@ input, select {
 }
 
     .button-home:hover {
-        background: var(--medac-blue-lighter);
+        background: var(--primary-soft);
     }
 
 .ranking-footer {
@@ -1415,23 +1462,19 @@ input, select {
 
 .answers-list::-webkit-scrollbar-thumb,
 .ranking-list::-webkit-scrollbar-thumb {
-    background: var(--medac-blue-light);
+    background: var(--primary-dark);
     border-radius: 4px;
 }
 
     .answers-list::-webkit-scrollbar-thumb:hover,
     .ranking-list::-webkit-scrollbar-thumb:hover {
-        background: var(--medac-blue);
+        background: var(--primary-ink);
     }
 
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 768px) {
-    .login-card {
-        padding: var(--spacing-lg);
-    }
-
     .login-title {
         font-size: 1.75rem;
     }
@@ -1440,18 +1483,12 @@ input, select {
         padding-top: var(--spacing-md);
     }
 
-    .flag-container {
-        height: 280px;
-    }
-
-    .circular-timer {
-        width: 280px;
-        height: 280px;
-    }
-
-    .flag-image {
-        width: 224px;
-        height: 224px;
+    /* Targets t√°ctiles c√≥modos (>= 44px) en t√°ctil */
+    .option-button,
+    .segmented-btn,
+    .login-tab,
+    .mode-tile {
+        min-height: 44px;
     }
 
     .stats-grid {
@@ -1529,12 +1566,12 @@ input, select {
     display: none;
 }
 /* ============================================
-   CSS ADICIONAL PARA RANKINGS PùBLICOS
-   Aùadir al final de main.css
+   CSS ADICIONAL PARA RANKINGS PÔøΩBLICOS
+   AÔøΩadir al final de main.css
    ============================================ */
 
 /* ============================================
-   BOTùN DE VER RANKINGS EN LOGIN
+   BOTÔøΩN DE VER RANKINGS EN LOGIN
    ============================================ */
 .login-actions {
     margin-top: var(--spacing-md);
@@ -1550,8 +1587,8 @@ input, select {
     gap: var(--spacing-xs);
     padding: var(--spacing-md);
     background: var(--white);
-    color: var(--medac-blue);
-    border: 2px solid var(--medac-blue);
+    color: var(--primary-ink);
+    border: 2px solid var(--primary-ink);
     border-radius: var(--radius-md);
     font-size: 0.875rem;
     font-weight: 600;
@@ -1560,7 +1597,7 @@ input, select {
 }
 
     .rankings-link-button:hover {
-        background: var(--medac-blue-lighter);
+        background: var(--primary-soft);
         transform: translateY(-1px);
     }
 
@@ -1570,7 +1607,7 @@ input, select {
 }
 
 /* ============================================
-   BARRA DE BùSQUEDA
+   BARRA DE BÔøΩSQUEDA
    ============================================ */
 .search-bar-container {
     margin-bottom: var(--spacing-md);
@@ -1588,8 +1625,8 @@ input, select {
 }
 
     .search-bar:focus-within {
-        border-color: var(--medac-blue);
-        box-shadow: 0 0 0 3px var(--medac-blue-lighter);
+        border-color: var(--primary-ink);
+        box-shadow: 0 0 0 3px var(--primary-soft);
     }
 
 .search-icon {
@@ -1684,7 +1721,7 @@ input, select {
 }
 
 .filter-current {
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     font-weight: 600;
     max-width: 200px;
     overflow: hidden;
@@ -1695,7 +1732,7 @@ input, select {
 .chevron-icon {
     width: 16px;
     height: 16px;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     transition: transform 0.2s ease;
 }
 
@@ -1740,17 +1777,17 @@ input, select {
     }
 
     .filter-option:hover {
-        background: var(--medac-blue-lighter);
-        color: var(--medac-blue);
+        background: var(--primary-soft);
+        color: var(--primary-ink);
     }
 
 .filter-option-active {
-    background: var(--medac-blue);
+    background: var(--primary-ink);
     color: var(--white);
 }
 
     .filter-option-active:hover {
-        background: var(--medac-blue-dark);
+        background: var(--primary-ink);
     }
 
 .filter-option-icon {
@@ -1785,7 +1822,7 @@ input, select {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--medac-blue);
+    color: var(--primary-ink);
     background: var(--white);
     cursor: pointer;
     outline: none;
@@ -1793,16 +1830,16 @@ input, select {
 }
 
     .sort-select:hover {
-        border-color: var(--medac-blue);
+        border-color: var(--primary-ink);
     }
 
     .sort-select:focus {
-        border-color: var(--medac-blue);
-        box-shadow: 0 0 0 2px var(--medac-blue-lighter);
+        border-color: var(--primary-ink);
+        box-shadow: 0 0 0 2px var(--primary-soft);
     }
 
 /* ============================================
-   BOTùN LIMPIAR FILTROS
+   BOTÔøΩN LIMPIAR FILTROS
    ============================================ */
 .clear-filters-btn {
     display: flex;
@@ -1874,7 +1911,7 @@ input, select {
 }
 
 /* ============================================
-   ANIMACIùN PARA RESULTADOS VACùOS
+   ANIMACIÔøΩN PARA RESULTADOS VACÔøΩOS
    ============================================ */
 .ranking-empty {
     padding: var(--spacing-xl);
@@ -1907,12 +1944,12 @@ input, select {
 }
 
 .filter-options::-webkit-scrollbar-thumb {
-    background: var(--medac-blue-light);
+    background: var(--primary-dark);
     border-radius: 3px;
 }
 
     .filter-options::-webkit-scrollbar-thumb:hover {
-        background: var(--medac-blue);
+        background: var(--primary-ink);
     }
 
 /* ============================================
@@ -2185,6 +2222,48 @@ input, select {
 @media (max-width: 720px) {
     .modes-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   MEJORAS PARA ESCRITORIO (>= 1024px)
+   Aprovechan el ancho en vez de dejar una
+   columna de m√≥vil estirada y centrada.
+   ============================================ */
+@media (min-width: 1024px) {
+    /* Login: panel de marca a la izquierda, formulario a la derecha */
+    .login-card {
+        flex-direction: row;
+        max-width: 920px;
+        align-items: stretch;
+    }
+
+    .login-brand {
+        flex: 0 0 360px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--spacing-xl);
+    }
+
+    .login-panel {
+        flex: 1;
+        justify-content: center;
+        padding: var(--spacing-xl);
+    }
+
+    /* Modos: tres columnas para llenar el ancho √∫til */
+    .modes-card {
+        max-width: 1040px;
+    }
+
+    .modes-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Ranking algo m√°s ancho en pantallas grandes */
+    .ranking-content {
+        max-width: 1100px;
     }
 }
 
