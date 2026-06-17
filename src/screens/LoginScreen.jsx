@@ -108,7 +108,9 @@ export default function LoginScreen() {
                     <div className="logo-container">
                         <CompassRose />
                     </div>
-                    <h1 className="login-title">Flag Challenge</h1>
+                    <p className="login-eyebrow">ATLAS DEL MUNDO</p>
+                    <h1 className="login-title">Flag<br />Challenge</h1>
+                    <div className="login-divider" aria-hidden="true" />
                     <p className="login-subtitle">Pon a prueba tus conocimientos de banderas</p>
 
                     <ul className="login-features">

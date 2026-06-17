@@ -119,7 +119,25 @@ input, select {
 }
 
 .login-brand .login-subtitle {
-    color: rgba(255, 255, 255, 0.92);
+    color: #C9B79A;
+}
+
+/* Etiqueta superior tipo "eyebrow" sobre el panel marino */
+.login-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.7rem;
+    color: #D98E6A;
+    margin: var(--spacing-xs) 0;
+}
+
+/* Divisor bajo el título */
+.login-divider {
+    width: 46px;
+    height: 3px;
+    background: var(--accent);
+    margin: var(--spacing-xs) auto;
 }
 
 .login-features {
@@ -138,7 +156,10 @@ input, select {
 }
 
 .login-features .status-dot {
-    background: var(--paper-raised);
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    animation: none;
 }
 
 .login-panel {
@@ -517,53 +538,26 @@ input, select {
 }
 
 .flag-container {
-    position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
     margin: 0 auto var(--spacing-xl);
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 1 / 1;
 }
 
-/* CONTADOR CIRCULAR TIPO QUESO (escala con el contenedor vía viewBox) */
-.circular-timer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.timer-track {
-    fill: none;
-    stroke: var(--line);
-    stroke-width: 8;
-}
-
-.timer-progress-safe,
-.timer-progress-danger {
-    fill: none;
-    stroke-width: 8;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.5s linear;
-}
-
-.timer-progress-safe {
-    stroke: var(--success);
-}
-
-.timer-progress-danger {
-    stroke: var(--error);
+/* Placa rectangular marino que enmarca la bandera */
+.flag-plate {
+    display: inline-flex;
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 24px;
 }
 
 .flag-image {
-    width: 78%;
-    height: 78%;
+    width: 150px;
+    height: 100px;
     object-fit: contain;
-    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
-    position: relative;
-    z-index: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .options-container {
@@ -2222,6 +2216,12 @@ input, select {
         padding: var(--spacing-xl);
     }
 
+    .login-brand .login-title {
+        font-size: 2.875rem;
+        line-height: 0.92;
+        letter-spacing: -1.5px;
+    }
+
     .login-panel {
         flex: 1;
         justify-content: center;
@@ -2373,32 +2373,6 @@ body {
     letter-spacing: 0.2px;
 }
 
-/* ---- Medallón de bandera (GameScreen): disco papel + aro tinta ---- */
-.flag-container::before {
-    content: "";
-    position: absolute;
-    inset: 6%;
-    border-radius: 50%;
-    background: var(--paper-raised);
-    border: 2px solid var(--ink);
-    box-shadow: inset 0 0 0 5px var(--paper-raised), inset 0 0 0 6px var(--accent);
-    z-index: 0;
-}
-
-.flag-image {
-    filter: none;
-    border-radius: var(--radius-sm);
-}
-
-/* aro del temporizador en sintonía con el medallón */
-.timer-track {
-    stroke: var(--line-soft);
-}
-
-.timer-progress-safe {
-    stroke: var(--ink);
-}
-
 /* ---- Acento en estructura de ranking ---- */
 .ranking-item-current {
     border-left-color: var(--accent);
@@ -2436,32 +2410,10 @@ body {
    ROSA DE LOS VIENTOS (sello de marca del login)
    ============================================ */
 .compass-rose {
-    width: 64px;
-    height: 64px;
+    width: 90px;
+    height: 90px;
     display: block;
     margin: 0 auto;
-}
-
-/* Colores por defecto: estructura en tinta, aguja norte en acento */
-.compass-rose .compass-ink {
-    stroke: var(--ink);
-    fill: var(--ink);
-}
-
-.compass-rose .compass-needle-n {
-    fill: var(--accent);
-    stroke: var(--accent);
-}
-
-/* Sobre el panel de marca (fondo marino) las líneas van en crema */
-.login-brand .compass-rose .compass-ink {
-    stroke: var(--paper-raised);
-    fill: var(--paper-raised);
-}
-
-.login-brand .compass-rose .compass-needle-n {
-    fill: var(--accent);
-    stroke: var(--accent);
 }
 
 /* ============================================
