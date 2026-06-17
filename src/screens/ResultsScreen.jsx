@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Confetti from 'react-confetti'
 import { Trophy, Clock, CheckCircle, RotateCcw, BarChart3 } from 'lucide-react'
@@ -14,6 +14,7 @@ export default function ResultsScreen() {
     const { user, profile } = useAuth()
     const [showConfetti, setShowConfetti] = useState(false)
     const [isSaving, setIsSaving] = useState(true)
+    const hasSavedRef = useRef(false)
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -76,8 +77,11 @@ export default function ResultsScreen() {
     }, [correctAnswers, gameResults.answers, gameResults.mode, gameResults.worldLevelId, navigate, profile?.displayName, profile?.id, profile?.isGuest, score, totalQuestions, totalTime, user?.id])
 
     useEffect(() => {
+        if (hasSavedRef.current) return
+        hasSavedRef.current = true
         saveScore()
-    }, [saveScore])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handlePlayAgain = () => {
         localStorage.removeItem('gameResults')
