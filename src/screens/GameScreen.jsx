@@ -6,6 +6,17 @@ import { generateQuestions, calculateScore, GAME_CONFIG } from '../utils/gameUti
 import flagsData from '../assets/flags.json'
 import '../styles/main.css'
 
+// Placeholder SVG (data URI) que se muestra si una bandera no carga.
+const FLAG_PLACEHOLDER =
+    'data:image/svg+xml;utf8,' +
+    encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">' +
+        '<rect width="256" height="256" rx="16" fill="#F5F5F5"/>' +
+        '<path d="M70 60h12v140H70zM82 64h96l-18 28 18 28H82z" fill="#D1D1D1"/>' +
+        '<text x="128" y="232" font-family="sans-serif" font-size="16" fill="#737373" text-anchor="middle">Bandera no disponible</text>' +
+        '</svg>'
+    )
+
 export default function GameScreen() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -197,8 +208,13 @@ export default function GameScreen() {
 
                         <img
                             src={currentQuestion.flagUrl}
-                            alt="Bandera"
+                            alt="Bandera del país a adivinar"
                             className="flag-image"
+                            onError={(e) => {
+                                if (e.currentTarget.src !== FLAG_PLACEHOLDER) {
+                                    e.currentTarget.src = FLAG_PLACEHOLDER
+                                }
+                            }}
                         />
                     </div>
 

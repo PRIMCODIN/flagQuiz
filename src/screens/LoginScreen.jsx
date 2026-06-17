@@ -262,7 +262,7 @@ export default function LoginScreen() {
 
                         <button
                             type="submit"
-                            disabled={isBusy || !displayName}
+                            disabled={isBusy || !guestName}
                             className="submit-button"
                         >
                             {isBusy ? 'Entrando...' : 'Jugar como invitado'}
