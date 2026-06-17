@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Flag, User, Mail, Lock, Trophy } from 'lucide-react'
+import { User, Mail, Lock, Trophy } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { isValidUsername } from '../utils/gameUtils'
 import { useAuth } from '../context/AuthContext'
 import { getEmailForUsername } from '../api/supabaseProfiles'
+import CompassRose from '../components/CompassRose'
 
 const TAB_LOGIN = 'login'
 const TAB_SIGNUP = 'signup'
@@ -105,7 +106,7 @@ export default function LoginScreen() {
             <div className="login-card">
                 <aside className="login-brand">
                     <div className="logo-container">
-                        <Flag className="logo-icon" />
+                        <CompassRose />
                     </div>
                     <h1 className="login-title">Flag Challenge</h1>
                     <p className="login-subtitle">Pon a prueba tus conocimientos de banderas</p>
