@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { User, Trophy, BarChart3, Clock, ArrowLeft } from 'lucide-react'
+import { User, Trophy, BarChart3, Clock, ArrowLeft, AlertCircle } from 'lucide-react'
+import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 import { getUserStats } from '../utils/database'
 import { formatTime } from '../utils/gameUtils'
@@ -10,6 +11,7 @@ export default function ProfileScreen() {
     const { user, profile } = useAuth()
     const [stats, setStats] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         const load = async () => {
@@ -22,6 +24,8 @@ export default function ProfileScreen() {
                 setStats(data)
             } catch (err) {
                 console.error('Error cargando estadísticas de usuario:', err)
+                setError(true)
+                toast.error('No se pudieron cargar tus estadísticas. Inténtalo de nuevo.')
             } finally {
                 setLoading(false)
             }
@@ -66,6 +70,13 @@ export default function ProfileScreen() {
                             <div className="ranking-loading">
                                 <div className="loading-spinner"></div>
                                 <p className="loading-text">Cargando estadísticas...</p>
+                            </div>
+                        ) : error ? (
+                            <div className="ranking-empty">
+                                <AlertCircle className="empty-icon" />
+                                <p className="empty-text">
+                                    Hubo un problema al cargar tus estadísticas. Comprueba tu conexión e inténtalo de nuevo.
+                                </p>
                             </div>
                         ) : !stats || stats.gamesPlayed === 0 ? (
                             <div className="ranking-empty">

@@ -9,21 +9,28 @@ import GameScreen from './screens/GameScreen'
 import ResultsScreen from './screens/ResultsScreen'
 import RankingScreen from './screens/RankingScreen'
 import PublicRankingScreen from './screens/PublicRankingScreen'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    {/* Rutas públicas */}
                     <Route path="/" element={<LoginScreen />} />
-                    <Route path="/modes" element={<ModeSelectScreen />} />
-                    <Route path="/world-path" element={<WorldPathScreen />} />
-                    <Route path="/free-mode" element={<FreeModeScreen />} />
-                    <Route path="/profile" element={<ProfileScreen />} />
-                    <Route path="/game" element={<GameScreen />} />
-                    <Route path="/results" element={<ResultsScreen />} />
-                    <Route path="/ranking" element={<RankingScreen />} />
                     <Route path="/public-rankings" element={<PublicRankingScreen />} />
+
+                    {/* Rutas protegidas: requieren sesión (usuario o invitado) */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/modes" element={<ModeSelectScreen />} />
+                        <Route path="/world-path" element={<WorldPathScreen />} />
+                        <Route path="/free-mode" element={<FreeModeScreen />} />
+                        <Route path="/profile" element={<ProfileScreen />} />
+                        <Route path="/game" element={<GameScreen />} />
+                        <Route path="/results" element={<ResultsScreen />} />
+                        <Route path="/ranking" element={<RankingScreen />} />
+                    </Route>
+
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
 
