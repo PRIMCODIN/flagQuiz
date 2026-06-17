@@ -56,7 +56,7 @@ export default function LoginScreen() {
         e.preventDefault()
 
         if (!isValidUsername(username)) {
-            toast.error('El usuario debe tener entre 3 y 50 caracteres (solo letras y números)')
+            toast.error('El usuario debe tener entre 3 y 20 caracteres: solo letras, números y guiones bajos, sin espacios')
             return
         }
 
@@ -82,7 +82,7 @@ export default function LoginScreen() {
         e.preventDefault()
 
         if (!isValidUsername(guestName)) {
-            toast.error('El nombre debe tener entre 3 y 50 caracteres (solo letras y números)')
+            toast.error('El nombre debe tener entre 3 y 20 caracteres: solo letras, números y guiones bajos, sin espacios')
             return
         }
 
@@ -209,12 +209,12 @@ export default function LoginScreen() {
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Ej: victorprim"
+                                placeholder="Tu nombre de usuario"
                                 className="form-input"
-                                maxLength={50}
+                                maxLength={20}
                                 disabled={isBusy}
                             />
-                            <p className="form-hint">Entre 3 y 50 caracteres</p>
+                            <p className="form-hint">3-20 caracteres: letras, números y guiones bajos, sin espacios</p>
                         </div>
 
                         <div className="form-group">
@@ -268,12 +268,12 @@ export default function LoginScreen() {
                                 type="text"
                                 value={guestName}
                                 onChange={(e) => setGuestName(e.target.value)}
-                                placeholder="Ej: María García"
+                                placeholder="Tu nombre de usuario"
                                 className="form-input"
-                                maxLength={50}
+                                maxLength={20}
                                 disabled={isBusy}
                             />
-                            <p className="form-hint">Se usará en el ranking como invitado</p>
+                            <p className="form-hint">3-20 caracteres, sin espacios. Se usará en el ranking.</p>
                         </div>
 
                         <button

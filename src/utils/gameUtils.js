@@ -179,15 +179,16 @@ export function formatTime(seconds) {
 }
 
 /**
- * Valida que el nombre de usuario sea válido
+ * Valida que el nombre de usuario sea válido.
+ * Regla única: 3-20 caracteres, solo letras (a-z), números y guiones bajos,
+ * sin espacios. Se aplica tanto a usuarios registrados como a invitados.
  */
 export function isValidUsername(username) {
-    if (!username || username.trim().length < 3) return false
-    if (username.length > 50) return false // Aumentado de 20 a 50
-
-    // Solo letras, números, espacios y caracteres españoles
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/
-    return regex.test(username)
+    if (!username) return false
+    const value = username.trim()
+    if (value.length < GAME_CONFIG.MIN_USERNAME_LENGTH) return false
+    if (value.length > GAME_CONFIG.MAX_USERNAME_LENGTH) return false
+    return /^[a-zA-Z0-9_]+$/.test(value)
 }
 
 /**
@@ -197,5 +198,5 @@ export const GAME_CONFIG = {
     NUM_QUESTIONS: 12,
     TIME_PER_QUESTION: 15, // segundos
     MIN_USERNAME_LENGTH: 3,
-    MAX_USERNAME_LENGTH: 50 // Aumentado de 20 a 50
+    MAX_USERNAME_LENGTH: 20
 }

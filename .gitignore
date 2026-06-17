@@ -16,9 +16,15 @@ build/
 # Editor
 .vscode/
 .idea/
+.vs/
 *.swp
 *.swo
 *~
+
+# Artefactos de Visual Studio
+obj/
+bin/
+*.esproj.user
 
 # Sistema
 .DS_Store
