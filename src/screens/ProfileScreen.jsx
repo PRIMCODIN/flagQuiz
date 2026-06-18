@@ -17,6 +17,7 @@ export default function ProfileScreen() {
         const load = async () => {
             if (!user || profile?.isGuest) {
                 setLoading(false)
+                navigate('/modes')
                 return
             }
             try {
@@ -31,9 +32,11 @@ export default function ProfileScreen() {
             }
         }
         load()
-    }, [user, profile])
+    }, [user, profile, navigate])
 
-    const isGuest = !user || profile?.isGuest
+    // Salvaguarda: un invitado (o sin sesión) nunca debe ver el perfil; el useEffect
+    // redirige a /modes, y aquí evitamos renderizar contenido mientras navega.
+    if (!user || profile?.isGuest) return null
 
     return (
         <div className="ranking-container">
@@ -55,95 +58,82 @@ export default function ProfileScreen() {
                     </p>
                 </div>
 
-                {isGuest && (
+                {loading ? (
+                    <div className="ranking-loading">
+                        <div className="loading-spinner"></div>
+                        <p className="loading-text">Cargando estadísticas...</p>
+                    </div>
+                ) : error ? (
                     <div className="ranking-empty">
-                        <Trophy className="empty-icon" />
+                        <AlertCircle className="empty-icon" />
                         <p className="empty-text">
-                            Inicia sesión o crea una cuenta para ver tus estadísticas personales.
+                            Hubo un problema al cargar tus estadísticas. Comprueba tu conexión e inténtalo de nuevo.
                         </p>
                     </div>
-                )}
+                ) : !stats || stats.gamesPlayed === 0 ? (
+                    <div className="ranking-empty">
+                        <Trophy className="empty-icon" />
+                        <p className="empty-text">Aún no has jugado ninguna partida.</p>
+                    </div>
+                ) : (
+                    <div className="ranking-list-card">
+                        <div className="ranking-list-header">
+                            <h2 className="ranking-list-title">Resumen personal</h2>
+                        </div>
 
-                {!isGuest && (
-                    <>
-                        {loading ? (
-                            <div className="ranking-loading">
-                                <div className="loading-spinner"></div>
-                                <p className="loading-text">Cargando estadísticas...</p>
+                        <div className="stats-grid">
+                            <div className="stat-box stat-success">
+                                <Trophy className="stat-icon" />
+                                <div className="stat-value">{stats.bestScore}</div>
+                                <div className="stat-label">mejor puntuación</div>
                             </div>
-                        ) : error ? (
-                            <div className="ranking-empty">
-                                <AlertCircle className="empty-icon" />
-                                <p className="empty-text">
-                                    Hubo un problema al cargar tus estadísticas. Comprueba tu conexión e inténtalo de nuevo.
-                                </p>
+
+                            <div className="stat-box stat-time">
+                                <BarChart3 className="stat-icon" />
+                                <div className="stat-value">{stats.avgScore}</div>
+                                <div className="stat-label">media de puntos</div>
                             </div>
-                        ) : !stats || stats.gamesPlayed === 0 ? (
-                            <div className="ranking-empty">
-                                <Trophy className="empty-icon" />
-                                <p className="empty-text">Aún no has jugado ninguna partida.</p>
-                            </div>
-                        ) : (
-                            <div className="ranking-list-card">
-                                <div className="ranking-list-header">
-                                    <h2 className="ranking-list-title">Resumen personal</h2>
+
+                            <div className="stat-box">
+                                <Clock className="stat-icon" />
+                                <div className="stat-value">
+                                    {formatTime(stats.avgTimeSecondsPerGame)}
                                 </div>
+                                <div className="stat-label">tiempo medio</div>
+                            </div>
+                        </div>
 
-                                <div className="stats-grid">
-                                    <div className="stat-box stat-success">
-                                        <Trophy className="stat-icon" />
-                                        <div className="stat-value">{stats.bestScore}</div>
-                                        <div className="stat-label">mejor puntuación</div>
-                                    </div>
+                        <div className="answers-card" style={{ marginTop: '1.5rem' }}>
+                            <h2 className="answers-title">
+                                <Trophy className="answers-icon" />
+                                Últimas partidas
+                            </h2>
 
-                                    <div className="stat-box stat-time">
-                                        <BarChart3 className="stat-icon" />
-                                        <div className="stat-value">{stats.avgScore}</div>
-                                        <div className="stat-label">media de puntos</div>
-                                    </div>
-
-                                    <div className="stat-box">
-                                        <Clock className="stat-icon" />
-                                        <div className="stat-value">
-                                            {formatTime(stats.avgTimeSecondsPerGame)}
-                                        </div>
-                                        <div className="stat-label">tiempo medio</div>
-                                    </div>
-                                </div>
-
-                                <div className="answers-card" style={{ marginTop: '1.5rem' }}>
-                                    <h2 className="answers-title">
-                                        <Trophy className="answers-icon" />
-                                        Últimas partidas
-                                    </h2>
-
-                                    <div className="answers-list">
-                                        {stats.recentGames.map((g, idx) => (
-                                            <div key={idx} className="answer-item">
-                                                <div className="answer-content">
-                                                    <div className="answer-number">
-                                                        {idx + 1}
-                                                    </div>
-                                                    <div className="answer-details">
-                                                        <div className="answer-country">
-                                                            {g.mode}
-                                                        </div>
-                                                        <div className="answer-selected">
-                                                            {g.correctAnswers}/{g.totalQuestions} aciertos •{' '}
-                                                            {formatTime(g.timeSeconds)}
-                                                        </div>
-                                                    </div>
+                            <div className="answers-list">
+                                {stats.recentGames.map((g, idx) => (
+                                    <div key={idx} className="answer-item">
+                                        <div className="answer-content">
+                                            <div className="answer-number">
+                                                {idx + 1}
+                                            </div>
+                                            <div className="answer-details">
+                                                <div className="answer-country">
+                                                    {g.mode}
                                                 </div>
-                                                <div className="answer-points">
-                                                    {g.score} pts
+                                                <div className="answer-selected">
+                                                    {g.correctAnswers}/{g.totalQuestions} aciertos •{' '}
+                                                    {formatTime(g.timeSeconds)}
                                                 </div>
                                             </div>
-                                        ))}
+                                        </div>
+                                        <div className="answer-points">
+                                            {g.score} pts
+                                        </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
-                        )}
-                    </>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

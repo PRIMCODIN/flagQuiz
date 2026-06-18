@@ -140,6 +140,10 @@ export default function GameScreen() {
         return 'timer-danger'
     }
 
+    const timerProgress = (timeRemaining / GAME_CONFIG.TIME_PER_QUESTION) * 100
+    const strokeDasharray = 974 // ≈ 2π·155 (radio del círculo)
+    const strokeDashoffset = strokeDasharray - (strokeDasharray * timerProgress) / 100
+
     if (questions.length === 0) {
         return (
             <div className="game-loading">
@@ -185,18 +189,28 @@ export default function GameScreen() {
 
                 <div className="question-card">
                     <div className="flag-container">
-                        <div className="flag-plate">
-                            <img
-                                src={currentQuestion.flagUrl}
-                                alt="Bandera del país a adivinar"
-                                className="flag-image"
-                                onError={(e) => {
-                                    if (e.currentTarget.src !== FLAG_PLACEHOLDER) {
-                                        e.currentTarget.src = FLAG_PLACEHOLDER
-                                    }
-                                }}
+                        <svg className="circular-timer" viewBox="0 0 320 320" style={{ transform: 'rotate(-90deg)' }}>
+                            <circle className="timer-track" cx="160" cy="160" r="155" />
+                            <circle
+                                className="timer-progress"
+                                cx="160"
+                                cy="160"
+                                r="155"
+                                strokeDasharray={strokeDasharray}
+                                strokeDashoffset={strokeDashoffset}
                             />
-                        </div>
+                        </svg>
+
+                        <img
+                            src={currentQuestion.flagUrl}
+                            alt="Bandera del país a adivinar"
+                            className="flag-image"
+                            onError={(e) => {
+                                if (e.currentTarget.src !== FLAG_PLACEHOLDER) {
+                                    e.currentTarget.src = FLAG_PLACEHOLDER
+                                }
+                            }}
+                        />
                     </div>
 
                     <div className="options-container">

@@ -148,11 +148,11 @@ export default function RankingScreen() {
                 </div>
 
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/modes')}
                     className="button button-home"
                 >
                     <Home className="button-icon" />
-                    Volver al Inicio
+                    Volver a los modos
                 </button>
 
                 <div className="ranking-footer">

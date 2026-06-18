@@ -65,17 +65,19 @@ export default function ModeSelectScreen() {
                         </div>
                     </button>
 
-                    <button
-                        className="mode-tile"
-                        onClick={() => navigate('/profile')}
-                        type="button"
-                    >
-                        <User className="mode-icon" />
-                        <div className="mode-text">
-                            <div className="mode-name">Perfil</div>
-                            <div className="mode-desc">Ver tus estadísticas</div>
-                        </div>
-                    </button>
+                    {!profile?.isGuest && (
+                        <button
+                            className="mode-tile"
+                            onClick={() => navigate('/profile')}
+                            type="button"
+                        >
+                            <User className="mode-icon" />
+                            <div className="mode-text">
+                                <div className="mode-name">Perfil</div>
+                                <div className="mode-desc">Ver tus estadísticas</div>
+                            </div>
+                        </button>
+                    )}
                 </div>
 
                 <div className="modes-actions">

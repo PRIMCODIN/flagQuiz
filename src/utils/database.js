@@ -3,7 +3,7 @@ import { fetchLeaderboard, fetchUserEntries, submitLeaderboardEntry, subscribeTo
 /**
  * Inserta una entrada en el leaderboard simplificado.
  * Tabla esperada en Supabase: leaderboard_entries
- * Columnas mínimas:
+ * Columnas mï¿½nimas:
  * - id (uuid)
  * - user_id (uuid, nullable para invitados)
  * - display_name (text)
@@ -64,12 +64,12 @@ export async function getLeaderboard({ mode, limit = 100 } = {}) {
 }
 
 /**
- * Estadísticas generales del juego basadas en leaderboard_entries
+ * Estadï¿½sticas generales del juego basadas en leaderboard_entries
  */
 export async function getGameStats() {
     try {
-        // Reutilizamos fetchLeaderboard para mantener una sola vía de lectura.
-        // Nota: para estadísticas globales en producción, convendría un RPC o vista agregada.
+        // Reutilizamos fetchLeaderboard para mantener una sola vï¿½a de lectura.
+        // Nota: para estadï¿½sticas globales en producciï¿½n, convendrï¿½a un RPC o vista agregada.
         const data = await fetchLeaderboard({ limit: 1000 })
 
         const totalGames = data.length
@@ -99,7 +99,7 @@ export async function getGameStats() {
 }
 
 /**
- * Suscripción en tiempo real a cambios en el ranking
+ * Suscripciï¿½n en tiempo real a cambios en el ranking
  */
 export function subscribeToRanking(callback) {
     return subscribeToLeaderboardInserts(callback)
@@ -134,7 +134,14 @@ export async function getUserStats(userId) {
         const avgScore = Math.round(totalScore / gamesPlayed)
         const avgTimeSecondsPerGame = Math.round(totalTime / gamesPlayed)
 
-        const recentGames = data.slice(0, 5)
+        const recentGames = data.slice(0, 5).map((g) => ({
+            score: g.score,
+            correctAnswers: g.correct_answers,
+            totalQuestions: g.total_questions,
+            timeSeconds: g.time_seconds,
+            mode: g.mode,
+            createdAt: g.created_at
+        }))
 
         return {
             gamesPlayed,

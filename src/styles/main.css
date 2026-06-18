@@ -538,26 +538,49 @@ input, select {
 }
 
 .flag-container {
+    position: relative;
     display: flex;
+    align-items: center;
     justify-content: center;
     margin: 0 auto var(--spacing-xl);
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    background: var(--paper); /* relleno vainilla/crema del círculo (tono del fondo general) */
+    border-radius: 50%;
 }
 
-/* Placa rectangular marino que enmarca la bandera */
-.flag-plate {
-    display: inline-flex;
-    background: var(--ink);
-    border-radius: 12px;
-    padding: 24px;
+/* Contador circular que escala con el contenedor vía viewBox */
+.circular-timer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Pista tenue del anillo */
+.timer-track {
+    fill: none;
+    stroke: var(--line-soft);
+    stroke-width: 8;
+}
+
+/* Circunferencia azul = barra de tiempo (15 s) */
+.timer-progress {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s linear;
 }
 
 .flag-image {
-    width: 150px;
-    height: 100px;
+    width: 78%;
+    height: 78%;
     object-fit: contain;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-sm);
+    position: relative;
+    z-index: 1;
 }
 
 .options-container {
