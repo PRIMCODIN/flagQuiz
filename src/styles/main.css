@@ -408,15 +408,24 @@ input, select {
    GAME SCREEN
    ============================================ */
 .game-container {
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* red de seguridad para viewports muy bajos (móvil horizontal) */
     background: var(--paper);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
 }
 
 .game-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
 }
 
 .game-loading {
@@ -447,6 +456,7 @@ input, select {
 }
 
 .game-header {
+    flex-shrink: 0;
     background: var(--paper-raised);
     border-radius: var(--radius-lg);
     box-shadow: none;
@@ -531,20 +541,26 @@ input, select {
 }
 
 .question-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
     background: var(--paper-raised);
     border-radius: var(--radius-xl);
     box-shadow: none;
-    padding: var(--spacing-xl);
+    padding: clamp(1rem, 3vh, 3rem);
 }
 
 .flag-container {
     position: relative;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto clamp(1rem, 3vh, 2rem);
     width: 100%;
-    max-width: 320px;
+    max-width: min(320px, 38vh); /* el círculo se encoge cuando hay poco alto */
     aspect-ratio: 1 / 1;
     background: var(--paper); /* relleno vainilla/crema del círculo (tono del fondo general) */
     border-radius: 50%;
@@ -584,16 +600,17 @@ input, select {
 }
 
 .options-container {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: clamp(0.5rem, 1.5vh, 1rem);
 }
 
 .option-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-md);
+    padding: clamp(0.6rem, 1.8vh, 1.5rem) var(--spacing-md);
     border-radius: var(--radius-md);
     font-size: 1rem;
     font-weight: 500;
@@ -1524,14 +1541,13 @@ input, select {
 
 @media (max-width: 480px) {
     .header-info {
-        flex-direction: column;
-        gap: var(--spacing-sm);
-        align-items: flex-start;
+        /* Se mantiene en fila (con wrap) para no añadir altura en pantallas bajas */
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
     }
 
     .stats-container {
-        width: 100%;
-        justify-content: space-between;
+        gap: var(--spacing-sm);
     }
 
     .question-card {
