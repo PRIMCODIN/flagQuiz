@@ -1026,28 +1026,23 @@ input, select {
    RANKING SCREEN
    ============================================ */
 .ranking-container {
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--paper);
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
 }
 
-/* Único contenedor de scroll: todo el contenido (cabecera, podio, lista, botón)
-   queda acotado a la altura del viewport y se desplaza aquí dentro. Así nada se
-   corta y se evita el doble scrollbar que producían los max-height anidados. */
+/* Flujo normal: la página desplaza con el scrollbar del navegador (en el borde),
+   sin scroll interno anidado ni "barra rara" flotante dentro de la columna. */
 .ranking-content {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     padding: var(--spacing-md) 0;
 }
 
-/* Sin scroll anidado: las listas crecen con su contenido y desplazan junto al resto */
+/* Sin scroll anidado: las listas crecen con su contenido (el ranking ya se acota
+   al Top 10 y el perfil a 5 partidas), así que no hace falta cap de altura. */
 .ranking-container .ranking-list,
 .ranking-container .answers-list {
     max-height: none;

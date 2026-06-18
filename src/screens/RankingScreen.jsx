@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Trophy, Medal, Award, Home } from 'lucide-react'
+import { Trophy, Medal, Award, Home, Search, X } from 'lucide-react'
 import { getLeaderboard, subscribeToRanking } from '../utils/database'
 import { formatTime } from '../utils/gameUtils'
 import toast from 'react-hot-toast'
 import '../styles/main.css'
 
+// Número de puestos que se muestran por defecto (sin búsqueda activa).
+const TOP_LIMIT = 10
+
 export default function RankingScreen() {
     const navigate = useNavigate()
     const [ranking, setRanking] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
         loadRanking()
@@ -29,7 +33,7 @@ export default function RankingScreen() {
     const loadRanking = async () => {
         setIsLoading(true)
         try {
-            const data = await getLeaderboard({ limit: 50 })
+            const data = await getLeaderboard({ limit: 100 })
             setRanking(data)
         } catch (error) {
             console.error('Error loading ranking:', error)
@@ -38,6 +42,17 @@ export default function RankingScreen() {
             setIsLoading(false)
         }
     }
+
+    const isSearching = searchTerm.trim().length > 0
+
+    // Sin búsqueda: Top 10. Con búsqueda: todos los que coincidan por nombre.
+    const displayedRanking = isSearching
+        ? ranking.filter((entry) =>
+            entry.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        : ranking.slice(0, TOP_LIMIT)
+
+    const clearSearch = () => setSearchTerm('')
 
     const getMedalIcon = (rank) => {
         if (rank === 1) return <Trophy className="medal-icon medal-gold" />
@@ -53,11 +68,29 @@ export default function RankingScreen() {
                     <Trophy className="ranking-trophy-icon" />
                     <h1 className="ranking-title">Clasificación</h1>
                     <p className="ranking-subtitle">
-                        Top {ranking.length} mejores puntuaciones
+                        Top {TOP_LIMIT} · {ranking.length} {ranking.length === 1 ? 'participante' : 'participantes'}
                     </p>
                 </div>
 
-                {!isLoading && ranking.length >= 3 && (
+                <div className="search-bar-container">
+                    <div className="search-bar">
+                        <Search className="search-icon" />
+                        <input
+                            type="text"
+                            placeholder="Buscar por nombre..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="search-input"
+                        />
+                        {searchTerm && (
+                            <button onClick={clearSearch} className="search-clear">
+                                <X className="clear-icon" />
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {!isLoading && !isSearching && ranking.length >= 3 && (
                     <div className="podium-card">
                         <h2 className="podium-title">🏆 Podio 🏆</h2>
 
@@ -94,7 +127,9 @@ export default function RankingScreen() {
 
                 <div className="ranking-list-card">
                     <div className="ranking-list-header">
-                        <h2 className="ranking-list-title">Clasificación Completa</h2>
+                        <h2 className="ranking-list-title">
+                            {isSearching ? 'Resultados de búsqueda' : `Top ${TOP_LIMIT}`}
+                        </h2>
                     </div>
 
                     {isLoading ? (
@@ -102,14 +137,18 @@ export default function RankingScreen() {
                             <div className="loading-spinner"></div>
                             <p className="loading-text">Cargando ranking...</p>
                         </div>
-                    ) : ranking.length === 0 ? (
+                    ) : displayedRanking.length === 0 ? (
                         <div className="ranking-empty">
                             <Trophy className="empty-icon" />
-                            <p className="empty-text">No hay partidas registradas todavía</p>
+                            <p className="empty-text">
+                                {isSearching
+                                    ? `No se encontraron resultados para "${searchTerm}"`
+                                    : 'No hay partidas registradas todavía'}
+                            </p>
                         </div>
                     ) : (
                         <div className="ranking-list">
-                            {ranking.map((entry) => (
+                            {displayedRanking.map((entry) => (
                                 <div
                                     key={entry.rank + entry.displayName + entry.createdAt}
                                     className="ranking-item"
