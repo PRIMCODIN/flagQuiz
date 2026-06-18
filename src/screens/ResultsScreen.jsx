@@ -25,7 +25,9 @@ export default function ResultsScreen() {
     const correctAnswers = gameResults.answers?.filter(a => a.isCorrect).length || 0
     const totalQuestions = gameResults.totalQuestions || 12
     const score = gameResults.score || 0
-    const totalTime = gameResults.answers?.reduce((sum, a) => sum + (15 - a.timeRemaining), 0) || 0
+    // Duración real total de la partida (segundos con decimales) medida con el
+    // reloj en GameScreen. Ya no se deriva del contador entero por bandera.
+    const totalTime = gameResults.timeSeconds ?? 0
 
     useEffect(() => {
         const handleResize = () => {
@@ -47,6 +49,9 @@ export default function ResultsScreen() {
         try {
             const displayName = profile?.displayName || 'Invitado'
             const userId = profile?.isGuest ? null : user?.id || profile?.id || null
+
+            // LOG TEMPORAL: verificar el valor real de tiempo antes del insert.
+            console.log('[time_seconds] valor a guardar:', totalTime)
 
             await submitScore({
                 userId,

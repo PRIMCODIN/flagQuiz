@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Trophy, Clock, CheckCircle, XCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -28,6 +28,9 @@ export default function GameScreen() {
     const [selectedAnswer, setSelectedAnswer] = useState(null)
     const [isAnswered, setIsAnswered] = useState(false)
     const [showFeedback, setShowFeedback] = useState(false)
+    // Timestamp (performance.now) del inicio de la partida. Se usa para medir
+    // la duración real con decimales, en vez de derivarla del contador entero.
+    const startTimeRef = useRef(null)
 
     const currentQuestion = questions[currentQuestionIndex]
 
@@ -41,10 +44,17 @@ export default function GameScreen() {
             if (prev < questions.length - 1) return prev + 1
 
             const config = location.state || { mode: 'classic', continent: 'World', difficulty: 'normal' }
+            // Duración real total de la partida (segundos con decimales),
+            // redondeada a 2 decimales para no almacenar floats largos.
+            const elapsedSeconds = startTimeRef.current != null
+                ? (performance.now() - startTimeRef.current) / 1000
+                : 0
+            const timeSeconds = Math.round(elapsedSeconds * 100) / 100
             const gameResults = {
                 score,
                 answers: [...answers],
                 totalQuestions: questions.length,
+                timeSeconds,
                 mode: config.mode || 'classic',
                 worldLevelId: config.worldLevelId || null,
                 continent: config.continent || 'World',
@@ -85,6 +95,8 @@ export default function GameScreen() {
             difficulty: config.difficulty
         })
         setQuestions(generatedQuestions)
+        // Marca el inicio real de la partida (primera bandera).
+        startTimeRef.current = performance.now()
     }, [location.state])
 
     useEffect(() => {
